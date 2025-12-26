@@ -1,0 +1,43 @@
+# downloader/urls.py
+from django.urls import path, include
+from . import views
+
+urlpatterns = [
+    path("", views.index, name="index"),
+    path('format/', views.formats, name='formats'),
+    path('download/', views.download, name='download'),
+    path('progress/<str:download_id>/', views.progress, name='progress'),
+    path('progress-stream/<str:download_id>/', views.progress_stream, name='progress_stream'),
+    path('list-downloads/', views.list_downloads, name='list_downloads'),
+    path('delete-download/<str:filename>/', views.delete_download, name='delete_download'),
+    path('open-folder/', views.open_download_folder, name='open_folder'),
+    path('rename-file/', views.rename_file, name='rename_file'),
+    path("dec/", views.dec_internet, name="decinternet"),
+    path("inc/", views.inc_internet, name="incinternet"),
+    path("ds/", views.download_settings, name="downloadsettings"),
+    path('history/save/', views.save_to_history, name='save_history'),
+    path('history/', views.get_download_history, name='get_history'),
+    path('history/<int:history_id>/delete/', views.delete_from_history, name='delete_history'),
+    path('history/<int:history_id>/redownload/', views.redownload_from_history, name='redownload'),
+    path('history/clear/', views.clear_download_history, name='clear_history'),
+    path("open-file/", views.open_file, name="openfiles"),
+    path("open-file-location/", views.open_file_location),
+    path('list_home/', views.list_home_directory, name='list_home'),
+    path('list_directory/', views.list_directory, name='list_directory'),
+    path('get_file_content/', views.get_file_content, name='get_file_content'),
+    path('preview_file/', views.preview_file),
+    path("status/", views.system_status, name="system_status"),  # HTTP endpoint
+    path('change_pitch/', views.change_pitch, name='change_pitch'),
+    path("clearnyxpath/", views.clear_nyx_path, name="clearnyxpath"),
+    path("information/", views.wikipedia_information, name="wikipedia"), 
+    path('change_speed/', views.change_speed, name='change_speed'),
+    path('stream_preview/', views.stream_video_preview, name='stream_preview'),
+    path('pause/<str:download_id>/', views.pause_download, name='pause_download'),
+    path('resume/<str:download_id>/', views.resume_download, name='resume_download'),
+    path('cancel/<str:download_id>/', views.cancel_download, name='cancel_download'),
+    path("apply_filters/", views.apply_filters, name="apply_filters"),
+    path("siba/", views.siba_ibya_nyx, name="sibanyxfiles"),
+    path('generate-thumbnail/', views.generate_thumbnail, name='generate_thumbnail'),
+    path('playlist/video/formats/', views.get_playlist_video_formats, name='playlist_video_formats'),
+    path('icyiganza/', views.icyiganza, name='formats'),
+]
