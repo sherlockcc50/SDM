@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Snai Download Manager</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      background: #000000;
+      font-family: sans-serif;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Black Hole Effect */
+    .black-hole {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      z-index: 0;
+    }
+
+    /* Event Horizon - the black hole itself */
+    .event-horizon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      background: 
+        radial-gradient(circle at center, 
+          rgba(0, 0, 0, 1) 0%,
+          rgba(0, 0, 0, 1) 40%,
+          rgba(10, 10, 20, 1) 60%,
+          rgba(0, 0, 0, 1) 80%,
+          transparent 100%);
+      border-radius: 50%;
+      box-shadow: 
+        0 0 200px 100px rgba(0, 0, 0, 0.9),
+        inset 0 0 100px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Accretion Disk - spinning ring around black hole */
+    .accretion-disk {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at center, 
+          transparent 45%,
+          rgba(0, 0, 0, 0.1) 46%,
+          rgba(0, 255, 255, 0.2) 48%,
+          rgba(0, 0, 0, 0.3) 50%,
+          rgba(177, 0, 255, 0.2) 52%,
+          rgba(0, 255, 255, 0.1) 54%,
+          transparent 55%);
+      animation: rotateDisk 30s linear infinite;
+      filter: blur(1px);
+    }
+
+    /* Gravitational Lensing Effect */
+    .lensing-effect {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: 
+        radial-gradient(circle at center, 
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0.6) 10%,
+          rgba(0, 0, 0, 0.4) 20%,
+          rgba(0, 0, 0, 0.2) 30%,
+          transparent 40%);
+      border-radius: 50%;
+      filter: blur(20px);
+    }
+
+    /* Gravitational Waves */
+    .gravity-waves {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 255, 255, 0.1);
+      animation: pulseWave 8s ease-out infinite;
+      box-shadow: 
+        0 0 60px 20px rgba(0, 255, 255, 0.05),
+        inset 0 0 60px 20px rgba(0, 255, 255, 0.05);
+    }
+
+    .gravity-waves:nth-child(2) {
+      animation-delay: 2s;
+      width: 1000px;
+      height: 1000px;
+      border-color: rgba(177, 0, 255, 0.08);
+      box-shadow: 
+        0 0 80px 30px rgba(177, 0, 255, 0.03),
+        inset 0 0 80px 30px rgba(177, 0, 255, 0.03);
+    }
+
+    .gravity-waves:nth-child(3) {
+      animation-delay: 4s;
+      width: 1200px;
+      height: 1200px;
+      border-color: rgba(255, 0, 177, 0.06);
+      box-shadow: 
+        0 0 100px 40px rgba(255, 0, 177, 0.02),
+        inset 0 0 100px 40px rgba(255, 0, 177, 0.02);
+    }
+
+    /* Black hole radiation/glow */
+    .black-hole-glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1500px;
+      height: 1500px;
+      background: 
+        radial-gradient(circle at center, 
+          transparent 40%,
+          rgba(0, 255, 255, 0.02) 45%,
+          rgba(177, 0, 255, 0.01) 50%,
+          rgba(255, 0, 177, 0.005) 55%,
+          transparent 60%);
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+    }
+
+    /* Animations */
+    @keyframes rotateDisk {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes pulseWave {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+    }
+
+    /* Top image (atsnai.png) - NO MOVEMENT */
+    #top-img {
+      margin-top: 40px;
+      width: 150px;
+      height: auto;
+      opacity: 0.95;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.3));
+    }
+
+    /* Centered icon (icon.png) - NO MOVEMENT */
+    .center-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .center-container img {
+      width: 200px;
+      height: 200px;
+      opacity: 0.9;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.4));
+      top: -13%;
+    }
+
+    /* Subtle stars/particles being pulled into black hole */
+    .falling-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: fallToCenter linear infinite;
+    }
+
+    /* Create multiple particles */
+    .particle:nth-child(1) { top: 10%; left: 20%; animation-duration: 8s; }
+    .particle:nth-child(2) { top: 15%; left: 70%; animation-duration: 10s; }
+    .particle:nth-child(3) { top: 30%; left: 10%; animation-duration: 12s; }
+    .particle:nth-child(4) { top: 40%; left: 80%; animation-duration: 9s; }
+    .particle:nth-child(5) { top: 60%; left: 30%; animation-duration: 11s; }
+    .particle:nth-child(6) { top: 70%; left: 60%; animation-duration: 13s; }
+    .particle:nth-child(7) { top: 80%; left: 15%; animation-duration: 7s; }
+    .particle:nth-child(8) { top: 85%; left: 75%; animation-duration: 14s; }
+    .particle:nth-child(9) { top: 25%; left: 50%; animation-duration: 15s; }
+    .particle:nth-child(10) { top: 55%; left: 90%; animation-duration: 16s; }
+
+    @keyframes fallToCenter {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(
+          calc(50vw - var(--x) - 1px),
+          calc(50vh - var(--y) - 1px)
+        ) scale(0);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Black hole effects -->
+  <div class="black-hole">
+    <div class="lensing-effect"></div>
+    <div class="accretion-disk"></div>
+    <div class="event-horizon"></div>
+    <div class="gravity-waves"></div>
+    <div class="gravity-waves"></div>
+    <div class="gravity-waves"></div>
+  </div>
+  
+  <!-- Black hole glow -->
+  <div class="black-hole-glow"></div>
+  
+  <!-- Falling particles -->
+  <div class="falling-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Top image - STATIC -->
+  <img id="top-img" src="atsnai.png" alt="Top Icon">
+
+  <!-- Centered icon - STATIC -->
+  <div class="center-container">
+    <img src="icon.png" alt="Main Icon">
+  </div>
+
+  <script>
+    // Set particle positions for animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const particles = document.querySelectorAll('.particle');
+      particles.forEach(particle => {
+        const rect = particle.getBoundingClientRect();
+        particle.style.setProperty('--x', rect.left + 'px');
+        particle.style.setProperty('--y', rect.top + 'px');
+      });
+    });
+  </script>
+</body>
+</html>

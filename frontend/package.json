@@ -1,0 +1,14 @@
+{
+  "name": "Nyx",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "electronmon .",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^39.1.2",
+    "electronmon": "^2.0.4"
+  }
+}
