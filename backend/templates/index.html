@@ -1,0 +1,529 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Snai Download Manager</title>
+    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon" />
+    <style>
+        @font-face {
+            font-family: 'Orbitron';
+            src: url("{% static 'fonts/Orbitron.otf' %}") format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SF Pro';
+            src: url("{% static 'fonts/SF-Pro.ttf' %}") format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Outfit';
+            src: url("{% static 'fonts/Outfit.ttf' %}") format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/aug.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fa.css' %}">
+
+</head>
+
+<body class="body-tag" data-highlight-info="" data-augmented-ui="tl-round tr-round br-round bl-round border">
+
+
+    <div class="titlebar">
+  <div class="window-controls">
+    <button class="btn close" onclick="myAPI.closeWindow()">✖</button>
+    <button class="btn max" onclick="myAPI.maximizeWindow()">⤢</button>
+    <button class="btn min" onclick="myAPI.minimizeWindow()">−</button>
+  </div>
+
+  <div class="title">SDM</div>
+
+  <div class="right-spacer"></div>
+</div>
+
+
+
+    <!-- Download Manager -->
+    <div class="floating-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </div>
+    <div id="download-manager" class="download-manager" data-augmented-ui="tr-round tl-round bl-round br-round border">
+        <h2>SNAI DOWNLOAD MANAGER</h2>
+
+
+        <div class="downloads-scroll-wrapper">
+            <div id="real-downloads-container">
+                <!-- Your JS will still append .download-item here -->
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <center>
+            <div id="empty-state" class="empty-downloads">
+                <br><br><br><br><br><br>
+                NTA DOWNLOADS ZIHARI<br>
+                <span style="font-size:0.7rem;color:#88ffff;">Koresha Link Fetcher</span>
+            </div>
+        </center>
+    </div>
+
+    <!-- Original grid in top-left -->
+    <div class="all-hex-grid">
+        <a href="https://github.com/sherlockcc50">
+            <div name="github" title="sherlockcc50" data-augmented-ui="all-hex border" class="pulse">
+                <img src="{% static 'images/github.png' %}" alt="Github">
+            </div>
+        </a>
+        <a href="https://instagram/sherlockcc50/">
+            <div title="Shyiraho Icyo Uzana" name="addownload" data-augmented-ui="all-hex  border">
+                <img src="{% static 'images/add.png' %}" alt="Add">
+            </div>
+        </a>
+        <a href="#">
+            <div title="Shyiraho" data-augmented-ui="all-hex border">
+                <img src="{% static 'images/setting.png' %}" alt="Settings">
+            </div>
+        </a>
+        <a href="#" id="file-explorer-btn-interface">
+            <div data-augmented-ui="all-hex border" title="NYX">
+                <img src="{% static 'images/nyxlogo.png' %}" alt="Files">
+            </div>
+        </a>
+        <a href="#" id="decreaseinternet">
+            <div title="Gabanya Umuvuduko Wo Kuzana" data-augmented-ui="all-hex border">
+                <img src="{% static 'images/decrease.png' %}" alt="Decrease">
+            </div>
+        </a>
+        <a href="#" id="increaseinternet">
+            <div title="Ongera Umuvuduko Wo Kuzana" data-augmented-ui="all-hex border">
+                <img src="{% static 'images/fast2.png' %}" alt="Increase">
+            </div>
+        </a>
+        <a href="#" id="torrent-interface-btn">
+            <div title="Torrent" data-augmented-ui="all-hex border">
+                <img src="{% static 'images/torrent.png' %}" alt="Torrent">
+            </div>
+        </a>
+
+    </div>
+
+    <div class="bottom-curved-hex-grid" id="bottom-curved-hex-grid">
+        <div class="curve-container">
+            <div class="curved-grid-track">
+                <a href="#">
+                    <div id="search-interface" name="Shaka" title="Shaka" data-augmented-ui="all-hex border"
+                        class="pulse">
+                        <img src="{% static 'images/search.png' %}" alt="Shaka">
+                    </div>
+                </a>
+                <a href="#">
+                    <div id="close-explorer" title="Funga" data-augmented-ui="all-hex border">
+                        <img src="{% static 'images/close.png' %}" alt="Funga">
+                    </div>
+                </a>
+                <a href="#" id="download-status">
+                    <div data-augmented-ui="all-hex border" title="Reba Izo Uri Kuzana">
+                        <img src="{% static 'images/nodownloads.png' %}" alt="Ntadownloads">
+                    </div>
+                </a>
+                <a href="#" id="network-status">
+                    <div data-augmented-ui="all-hex border" title="Interinet">
+                        <img src="{% static 'images/wifi.png' %}" alt="Interinet">
+                    </div>
+                </a>
+                <a href="#" id="battery-status">
+                    <div data-augmented-ui="all-hex border" title="Battery">
+                        <img src="{% static 'images/batterynormalcharging.png' %}" alt="Battery">
+                    </div>
+                </a>
+                <a href="#" id="playing-status">
+                    <div data-augmented-ui="all-hex border" title="Ibyo Uri Gukina">
+                        <img src="{% static 'images/audio3.png' %}" alt="Playing">
+                    </div>
+                </a>
+                <a href="#" id="processor-monitor">
+                    <div data-augmented-ui="all-hex border" title="Imikorere">
+                        <img src="{% static 'images/gpu.png' %}" alt="Zimya">
+                    </div>
+                </a>
+                <a href="#" id="hand-control" title="Icyiganza">
+                    <div data-augmented-ui="all-hex border">
+                        <img src="{% static 'images/hand-control2.png' %}" alt="Icyiganza">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <audio id="click-sound" src="{% static 'audio/click.mp3' %}" preload="auto"></audio>
+    <audio id="loading-sound" src="{% static 'audio/loading.mp3' %}" preload="auto"></audio>
+    <audio id="error-sound" src="{% static 'audio/error.mp3' %}" preload="auto"></audio>
+
+
+    <!-- 3D Demo in top-right -->
+    <div class="demo-3d" data-augmented-ui-reset>
+        <div id="group3d" class="group-3d compressed" data-augmented-ui-reset>
+            <img class="info-border my-augfiguration" id="wifi-3d" src="{% static 'images/wifi.png' %}" alt="">
+            <img class="info-html my-augfiguration" id="os-3d" src="{% static 'images/nyxlogo.png' %}" alt="">
+            <img class="info-inlay my-augfiguration" id="online-3d" src="{% static '/images/connect.png' %}" alt="">
+            <img class="info-background my-augfiguration" id="battery-3d" style="transform: rotate(-90deg);"
+                src="{% static 'images/batterynormalcharging.png' %}" alt="">
+            <div class="expanded-labels">
+                <label style="color: #fff;" id="networks">Network</label>
+                <div class="label-line" data-augmented-ui="bl-clip-x" style="background: #ffcfc3;"></div>
+                <label style="color: #fff;" id="osname">OS</label>
+                <div class="label-line" data-augmented-ui="bl-clip-x" style="background: #b1ffff;"></div>
+                <label style="color: #fff;" id="isonline">Online</label>
+                <div class="label-line" data-augmented-ui="bl-clip-x" style="background: #fbe806;"></div>
+                <label style="color: #fff;" id="percentage-battery">Percentage</label>
+                <div class="label-line" data-augmented-ui="bl-clip-x" style="background: #ff8d81;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIGHLIGHTED-INFO -->
+    <div class="highlighted-info" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+        <!-- Demo downloads info -->
+        <div class="download-info show-download-1">
+            <h3>System Update Package</h3>
+            <p><span class="label">File:</span> <span class="value">System_Update_v2.5.7.zip</span></p>
+            <p><span class="label">Size:</span> <span class="value">2.4 GB / 2.4 GB</span></p>
+            <p><span class="label">Status:</span> <span class="value">Downloading</span></p>
+            <p><span class="label">Speed:</span> <span class="value">45 MB/s</span></p>
+            <p><span class="label">ETA:</span> <span class="value">00:53</span></p>
+            <p><span class="label">Source:</span> <span class="value">nyx-update-server.com</span></p>
+            <p><span class="label">Checksum:</span> <span class="value">SHA256: a1b2c3...</span></p>
+        </div>
+        <div class="download-info show-download-2">
+            <h3>Media Library Archive</h3>
+            <p><span class="label">File:</span> <span class="value">Media_Collection_2024.pkg</span></p>
+            <p><span class="label">Size:</span> <span class="value">1.2 GB / 1.8 GB</span></p>
+            <p><span class="label">Status:</span> <span class="value">Downloading</span></p>
+            <p><span class="label">Speed:</span> <span class="value">28 MB/s</span></p>
+            <p><span class="label">ETA:</span> <span class="value">01:15</span></p>
+            <p><span class="label">Source:</span> <span class="value">media-repository.net</span></p>
+            <p><span class="label">Type:</span> <span class="value">Compressed Archive</span></p>
+        </div>
+        <div class="download-info show-download-3">
+            <h3>Security Patch Bundle</h3>
+            <p><span class="label">File:</span> <span class="value">Security_Patch_v3.1.bin</span></p>
+            <p><span class="label">Size:</span> <span class="value">350 MB / 350 MB</span></p>
+            <p><span class="label">Status:</span> <span class="value">Downloading</span></p>
+            <p><span class="label">Speed:</span> <span class="value">12 MB/s</span></p>
+            <p><span class="label">ETA:</span> <span class="value">05:50</span></p>
+            <p><span class="label">Source:</span> <span class="value">security.nyx-os.com</span></p>
+            <p><span class="label">Priority:</span> <span class="value">High</span></p>
+        </div>
+        <div class="download-info show-download-4">
+            <h3>Document Archive</h3>
+            <p><span class="label">File:</span> <span class="value">Document_Backup.rar</span></p>
+            <p><span class="label">Size:</span> <span class="value">0 MB / 890 MB</span></p>
+            <p><span class="label">Status:</span> <span class="value">Queued</span></p>
+            <p><span class="label">Speed:</span> <span class="value">0 MB/s</span></p>
+            <p><span class="label">ETA:</span> <span class="value">--:--</span></p>
+            <p><span class="label">Source:</span> <span class="value">archive.nyx-data.org</span></p>
+            <p><span class="label">Encryption:</span> <span class="value">AES-256</span></p>
+        </div>
+        <div class="download-info show-download-5">
+            <h3>System Backup Image</h3>
+            <p><span class="label">File:</span> <span class="value">Full_Backup_Image.iso</span></p>
+            <p><span class="label">Size:</span> <span class="value">1.8 GB / 4.2 GB</span></p>
+            <p><span class="label">Status:</span> <span class="value">Downloading</span></p>
+            <p><span class="label">Speed:</span> <span class="value">65 MB/s</span></p>
+            <p><span class="label">ETA:</span> <span class="value">00:22</span></p>
+            <p><span class="label">Source:</span> <span class="value">backup.nyx-cloud.com</span></p>
+            <p><span class="label">Integrity:</span> <span class="value">Verified</span></p>
+        </div>
+
+        <!-- Real downloads info (dynamically updated) -->
+        <div class="download-info real-download-info">
+            <h3 id="real-download-title">YouTube Download</h3>
+            <p><span class="label">File:</span> <span class="value" id="real-download-filename">Loading...</span></p>
+            <p><span class="label">Size:</span> <span class="value" id="real-download-size">0 MB / 0 MB</span></p>
+            <p><span class="label">Status:</span> <span class="value" id="real-download-status">Starting...</span></p>
+            <p><span class="label">Speed:</span> <span class="value" id="real-download-speed">0 MB/s</span></p>
+            <p><span class="label">ETA:</span> <span class="value" id="real-download-eta">--:--</span></p>
+            <p><span class="label">Format:</span> <span class="value" id="real-download-format">Unknown</span></p>
+            <p><span class="label">Progress:</span> <span class="value" id="real-download-progress">0%</span></p>
+        </div>
+    </div>
+
+    <!-- YOUTUBE FORMAT FETCHER (FULL SCREEN) -->
+    <!-- YOUTUBE FORMAT FETCHER (FULL SCREEN) -->
+    <section id="yt-fetcher"
+        style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,5,15,0.96);z-index:9999;align-items:center;justify-content:center;flex-direction:column;padding:2rem;overflow-y:hidden;">
+
+        <img src="static/images/atsnai.png" width="200"
+            style="color:#b1ffff;text-shadow:0 0 8px rgba(0,255,255,0.7);font-size:1.4rem;margin-bottom:1.5rem;text-align:center;font-family:'Orbitron', monospace;">
+
+        <!-- Glassmorphic Search Interface -->
+        <div style="
+        width: 100%;
+        height: 4rem;
+        max-width: 770px;
+        background: rgba(43, 41, 41, 0.116);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 16px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    ">
+
+            <!-- File Icon -->
+            <div style="
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            margin-right: 16px;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        " title="Upload Torrent File" id="fileUploadButton">
+                <img src="static/images/torrent.png" alt="Zamura" width="20px" height="20px">
+            </div>
+
+            <!-- URL Input -->
+            <input type="text" placeholder="Paste Social Media URL …" id="yt-url" autocomplete="off" spellcheck="false"
+                autocomplete="off" autocorrect="off" autocapitalize="off" style="
+                flex: 1;
+                border: none;
+                background: transparent;
+                font-size: 16px;
+                color: white;
+                outline: none;
+                font-family: 'SF Pro', sans-serif;
+                padding: 10px 0;
+                font-weight: bold;
+            " />
+
+            <!-- Fetch Button -->
+            <button id="fetch-btn" style="
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4A90E2, #357ABD);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 12px;
+            flex-shrink: 0;
+        ">
+                <img src="static/images/send.png" alt="Shaka" width="20px" height="20px">
+            </button>
+        </div>
+        <input type="file" id="torrentFileInput" accept=".torrent" style="display: none;">
+
+        <!-- Media Grid Display -->
+        <div
+            style="width:100%;max-height:60vh;padding:1rem;background:transparent;font-family:'SF Pro', sans-serif;font-weight:bold;">
+
+            <!-- This will show ONE media thumbnail when fetched -->
+            <div id="media-grid-display" style="display:none;">
+                <!-- Big thumbnail (300x300px like Instagram) -->
+                <div id="single-media-thumbnail" style="display:flex;justify-content:center;">
+                    <!-- Big thumbnail will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+        <button id="close-fetcher" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border"
+            style="visibility:hidden;font-family:'Orbitron', monospace;margin-top:2rem;padding:1rem 2rem;background:transparent;color:#b1ffff;border:1px solid rgba(0,255,255,0.3);cursor:pointer;">
+            CLOSE
+        </button>
+    </section>
+
+    <!-- Overlay for dropdown -->
+    <div class="dropdown-overlay" id="dropdown-overlay"
+        style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:999;backdrop-filter:blur(3px);">
+    </div>
+
+    <!-- Quality Selection Dropdown - EXACTLY like Instagram grid -->
+    <div id="quality-dropdown"
+        style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:30px;padding:20px;width:300px;z-index:1000;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:fadeIn 0.3s ease;font-family:'SF Pro', sans-serif;">
+        <div
+            style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.1);font-weight: bold;">
+            <strong>
+                <h3
+                    style="font-size:16px;font-weight:800;color:rgba(255,255,255,0.9);margin:0;font-weight: bold;font-family: 'SF Pro';">
+                    Hitamo
+                </h3>
+                <img src="static/images/atsnai.png" width="150" style="position: absolute;top: -4%;left: 30%;">
+            </strong>
+            <button id="quality-close"
+                style="background:rgb(255, 0, 128);border:none;color:rgb(255, 255, 255);font-size:18px;cursor:pointer;transition:all 0.2s;padding:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:14px;">&times;</button>
+        </div>
+
+        <div id="quality-options-container"
+            style="display:flex;flex-direction:column;margin-bottom:20px;max-height:300px;overflow-y:auto;padding: 5px;gap: 10px;">
+            <!-- Format options will be generated by JavaScript -->
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:15px;">
+            <div id="download-progress"
+                style="display:none;flex-direction:column;gap:10px;align-items:center;width:100%;">
+                <div
+                    style="display:flex;justify-content:space-between;align-items:center;width:100%;font-size:13px;color:rgba(255,255,255,0.8);">
+                    <span>Downloading...</span>
+                    <span id="progress-text">0%</span>
+                </div>
+                <div style="width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+                    <div id="progress-fill"
+                        style="height:100%;background:#0095f6;width:0%;transition:width 0.3s;border-radius:2px;"></div>
+                </div>
+            </div>
+            <div id="progress-success"
+                style="color:#4CAF50;font-weight:600;font-size:14px;display:none;align-items:center;gap:8px;">
+                <i class="fas fa-check-circle"></i>
+                Download Complete!
+            </div>
+            <button id="start-download"
+                style="background:rgba(0, 148, 246, 0.11);color:white;border:1px solid springgreen;padding:12px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font-family: 'SF Pro';font-weight: bold;">
+                <img src="static/images/downg.png" width="20">
+            </button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -55%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+
+
+
+    <!-- SETTINGS PAGE – NOW 100% MATCHES YOUTUBE FETCHER STYLE -->
+    <section id="settings-page"
+        style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,5,15,0.96);z-index:9999;align-items:center;justify-content:center;flex-direction:column;padding:2rem;">
+
+        <h2
+            style="color:#b1ffff;text-shadow:0 0 8px rgba(0,255,255,0.7);font-size:1.4rem;margin-bottom:1rem;text-align:center;font-family:'Orbitron', monospace;">
+            DOWNLOAD SETTINGS
+        </h2>
+
+        <!-- Download Location -->
+        <div class="input-box" data-augmented-ui="tr-clip br-clip bl-clip border"
+            style="width:70%;margin-bottom:1.5rem;display:flex;align-items:center;">
+            <input type="text" id="download-location" placeholder="Download location path…" autocomplete="off"
+                spellcheck="false"
+                style="flex:1;padding:0.8rem 1rem;background:rgba(0,30,50,0.8);border:none;outline:none;color:#b1ffff;font-size:1rem;font-family:'Orbitron', monospace;"
+                value="{{ download_folder }}" type="text" spellcheck="false" autocomplete="off" autocorrect="off"
+                autocapitalize="off">
+
+        </div>
+
+        <!-- Download Timeout -->
+        <div class="input-box" data-augmented-ui="tr-clip br-clip bl-clip border"
+            style="width:70%;margin-bottom:1.5rem;display:flex;align-items:center;">
+            <input type="number" id="download-timeout" placeholder="Download timeout (seconds)…" autocomplete="off"
+                style="flex:1;padding:0.8rem 1rem;background:rgba(0,30,50,0.8);border:none;outline:none;color:#b1ffff;font-size:1rem;font-family:'Orbitron', monospace;"
+                value="30" min="10" max="120">
+        </div>
+
+        <!-- Buttons – BOTH exactly like the CLOSE button in YT fetcher -->
+        <div style="display:flex;gap:1.5rem;margin-top:2rem;">
+
+            <button class="save-settings" id="save-settings"
+                data-augmented-ui="tl-clip tr-clip br-clip bl-2-clip-x border">
+                EMEZA
+            </button>
+
+            <button class="close-settings" id="close-settings"
+                data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip border">
+                REKA
+            </button>
+        </div>
+    </section>
+
+
+    <!-- FILE EXPLORER SECTION (FULL SCREEN) -->
+    <section id="file-explorer"
+        style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,5,15,0.96);z-index:9999;align-items:center;justify-content:center;flex-direction:column;padding:.5rem;">
+
+        <h2
+            style="color:#b1ffff;text-shadow:0 0 8px rgba(0,255,255,0.7);font-size:1.4rem;margin-bottom:1rem;text-align:center;font-family:'Orbitron', monospace;">
+            HERA - EXPLORER
+        </h2>
+
+        <div style="display:flex;width:100%;height:100vh;gap:.5rem;left: 0;right: 0;">
+            <!-- LEFT PANEL - DIRECTORY TREE WITH FILES -->
+            <div class="explorer-panel" data-augmented-ui="tl-clip tr-round br-clip bl-clip border"
+                style="width:70%;height:100%;display:flex;flex-direction:column;">
+
+                <!-- Directory Tree with ALL Files (NERD-tree style) -->
+                <div id="directory-tree" class="directory-scroll-wrapper"
+                    style="flex:1;padding:1rem;width: 100%; height: 100%;">
+                    <!-- Directory tree will be dynamically populated by JavaScript -->
+                    <div class="tree-loading" style="text-align:center;color:#88ffff;padding:2rem;">
+                        Tegereza gato ama folder yose abanze aze ....
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL - PURE FILE PREVIEW (NO FILE INFO) -->
+            <div class="explorer-panel" data-augmented-ui="tl-clip tr-round br-clip bl-clip border"
+                style="width:100%;height:100%;display:flex;flex-direction:column;">
+
+                <!-- Pure preview area - no file info, just the content -->
+                <div id="preview-details" class="directory-scroll-wrapper"
+                    style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;overflow: auto">
+                    <div>
+                        <div style="font-size:3rem;margin-bottom:1rem;">
+                            <img class="nyxlogo"
+                                style="color: white; border-radius: 20px; background-color: transparent;"
+                                src="static/images/nyxlogo.png" alt="Nyx" width="120rem" height="120rem">
+                        </div>
+                        <div style="color:#88ffff;font-size:0.9rem;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button data-augmented-ui="tl-clip tr-clip br-clip bl-clip border"
+            style="visibility: hidden;font-family:'Orbitron', monospace;margin-top:2rem;padding:1rem 2rem;background: transparent;color:#b1ffff;border:none;cursor:pointer;">
+            FUNGA NYX
+        </button>
+    </section>
+
+
+    <script defer src="{% static 'js/index.js' %}"></script>
+</body>
+
+</html>
