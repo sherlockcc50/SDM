@@ -1,0 +1,82 @@
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+bin/
+
+# Handlandmarker task files
+backend/hand_landmarker*.task
+backend/pose_landmarker.task
+backend/face_landmarker.task
+
+# Node modules
+frontend/node_modules/
+
+# Static files
+#backend/staticfiles/
+# Only taskrack static/ folder itself
+#backend/static/*
+!static/.gitkeep
+
+# Optional: ignore editor files
+*.swp
+# Python virtual environment
+bin/
+venv/
+.env/
+
+# Node.js dependencies
+frontend/node_modules/
+node_modules/
+
+# MediaPipe model files
+*.task
+
+# Generated static files
+#staticfiles/
+
+# Python cache and build files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+dist/
+*.egg-info/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+
+!backend/static/**/*.css
+!backend/static/**/*.js
+!backend/static/**/*.png
