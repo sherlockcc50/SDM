@@ -69,8 +69,9 @@ Keyboard shortcuts: Space (play/pause), arrows (seek), ESC (close)
 Clone the repository:
 
 bash
-git clone https://github.com/sherlockcc50/snai-download-manager.git
-cd snai-download-manager
+git clone https://github.com/sherlockcc50/SDM.git
+cd SDM
+cd backend
 Install Python dependencies:
 
 bash
@@ -265,4 +266,4 @@ GitHub Issues: Report bugs
 
 Documentation: Check docs/ folder
 
-Email: sherlockcc50@example.com
+Email: sherlockcc50@gmail.com
