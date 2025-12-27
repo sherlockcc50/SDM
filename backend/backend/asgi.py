@@ -1,17 +1,16 @@
-import os
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
-from nyx import consumers
-from django.urls import path
+from nyx.routing import websocket_urlpatterns  # <- corrected
 
+import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),  # normal HTTP
+    "http": get_asgi_application(),
     "websocket": AuthMiddlewareStack(
-        URLRouter([
-            path("ws/status/", consumers.StatusConsumer.as_asgi()),
-        ])
+        URLRouter(
+            websocket_urlpatterns
+        )
     ),
 })
