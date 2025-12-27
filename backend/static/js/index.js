@@ -242,7 +242,7 @@ class DownloadWebSocketManager {
 
     connect() {
         try {
-            this.ws = new WebSocket('ws://localhost:65535');
+            this.ws = new WebSocket('ws://127.0.0.1:65534/ws/status/');
 
             this.ws.onopen = () => {
                 console.log('Download WebSocket connected');
@@ -605,7 +605,7 @@ function playErrorSound() {
 
 let setDImage = 'downg.png';
 const BASE_URL = "http://127.0.0.1:65534"
-const SOCKET_URL = 'ws://127.0.0.1:65535'
+const SOCKET_URL = 'ws://127.0.0.1:65534/ws/status/'
 document.addEventListener('DOMContentLoaded', function () {
 
     window.filterRequestCount = 0
@@ -7159,7 +7159,7 @@ window.showStatuses = function (options = {}) {
         position: 'fixed',
         showDiskUsage: true,
         useWebSocket: true,
-        webSocketUrl: 'ws://localhost:65535/',
+        webSocketUrl: 'ws://127.0.0.1:65534/ws/status/',
         showMonitor: false, // New: control whether to show the monitor
         ...options
     };
