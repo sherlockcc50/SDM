@@ -581,18 +581,20 @@ window.ClearNyx = async (path) => {
     }
 }
 
+let clickSoundRightNow = ['click-sound1', 'click-sound2', 'click-sound3', 'click-sound4']
+let choosenSoundPlayClickSound = clickSoundRightNow[Math.floor(Math.random() * clickSoundRightNow.length)]
 window.playClickSound = function () {
-    const clickSound = document.getElementById("click-sound");
+    const clickSound = document.getElementById(`${choosenSoundPlayClickSound}`);
     if (clickSound) {
         const sound = clickSound.cloneNode();
-        sound.volume = 0.4;
+        sound.volume = 1;
         sound.play().catch(() => { });
     }
 }
 
 
 function playErrorSound() {
-    const clickSound = document.getElementById("error-sound");
+    const clickSound = document.getElementById('error-sound');
     if (clickSound) {
         const sound = clickSound.cloneNode();
         sound.volume = 1;
@@ -2177,6 +2179,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // YouTube format f`etching
     const openBtn = document.querySelector('a[href="https://instagram/sherlockcc50/"]');
+    const secondOpenBtn = document.getElementById("torrent-interface-btn")
     window.fetcher = document.getElementById('yt-fetcher');
     const closeBtn = document.getElementById('close-fetcher');
     window.urlInput = document.getElementById('yt-url');
@@ -2229,6 +2232,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // OPEN FETCHER
     openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        fetcher.style.display = 'flex';
+        urlInput.focus();
+    });
+
+    secondOpenBtn.addEventListener('click', (e) => {
         e.preventDefault();
         fetcher.style.display = 'flex';
         urlInput.focus();
@@ -4915,13 +4924,24 @@ document.addEventListener('DOMContentLoaded', function () {
     urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') fetchFormats(); });
 
     // Sound effects
-    const clickSound = document.getElementById("click-sound");
     const loadingSound = document.getElementById('loading-sound');
 
+    let sounds = ['click-sound2', 'click-sound3', 'click-sound4', 'click-sound1']
+    let choosenSound = sounds[Math.floor(Math.random() * sounds.length)]
     document.addEventListener("click", () => {
+        const clickSound = document.getElementById(choosenSound);
         const sound = clickSound.cloneNode();
-        sound.volume = 0.4;
+        sound.volume = 0.9;
         sound.play().catch(() => { });
+        console.log("Playing sound: click sound add ", choosenSound)
+    });
+
+    document.addEventListener("dblclick", () => {
+        const clickSound = document.getElementById(choosenSound);
+        const sound = clickSound.cloneNode();
+        sound.volume = 0.9;
+        sound.play().catch(() => { });
+        console.log("Playing sound: click sound add ", choosenSound)
     });
 
     const demo3d = document.querySelector('.demo-3d');
@@ -7875,7 +7895,6 @@ window.showStatuses = function (options = {}) {
 
         // console.log("Left: ", data.gesture.hands.Left)
         // console.log("Right: ", data.gesture.hands.Right)
-        console.log(data.gesture)
 
         // Create gesture spam counter - STRICT FLOOD PROTECTION
 
@@ -7959,8 +7978,8 @@ window.showStatuses = function (options = {}) {
                         // Video is visible - PUSH = ZOOM OUT
                         const zoomFactor = 1.0 - (pushPullIntensity * 0.3); // 30% max zoom out
                         if (typeof zoomVideo === 'function') zoomVideo(Math.max(0.1, zoomFactor));
-                    }
 
+                    }
                     window.pushPullState.lastPushTime = now;
                     window.pushPullState.lastIntensity = pushPullIntensity;
                 }
@@ -7983,7 +8002,6 @@ window.showStatuses = function (options = {}) {
                         const zoomFactor = 1.0 + (pushPullIntensity * 0.5); // 50% max zoom in
                         if (typeof zoomVideo === 'function') zoomVideo(Math.min(5.0, zoomFactor));
                     }
-
                     window.pushPullState.lastPullTime = now;
                     window.pushPullState.lastIntensity = pushPullIntensity;
                 }
@@ -8039,7 +8057,9 @@ window.showStatuses = function (options = {}) {
                             return;
                         } else {
                             showNotification("⏸️ No media playing", "info");
+                            playErrorSound()
                         }
+                        
                     } else if (playPauseGestureType === 'TOGGLE_PLAYPAUSE') {
                         // Toggle play/pause gesture (both hands FIST)
                         if (video && video.style.display !== 'none' && video.offsetParent !== null) {
@@ -8048,6 +8068,7 @@ window.showStatuses = function (options = {}) {
                         } else if (audio && audio.style.display !== 'none' && audio.offsetParent !== null) {
                             toggleAudioPlayPause();
                         } else {
+                         playErrorSound()
                         }
                     }
                 } else if (window.gestureSpamCounter[bothHandsKey].blocked) {
@@ -8127,10 +8148,12 @@ window.showStatuses = function (options = {}) {
                         }
                     } else if (audio && audio.style.display !== 'none' && audio.offsetParent !== null) {
                         // Audio is visible (but audio doesn't rotate)
+                        playErrorSound()
                         showNotification(`↺ Audio playing - can't rotate`, "info");
                         return; // Don't rotate audio
                     } else {
                         // No media visible
+                        playErrorSound()
                         showNotification(`↺ No media to rotate`, "info");
                         return;
                     }
@@ -9874,217 +9897,217 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Icon mapping for different file types
     const FILE_ICONS = {
-    // 基本文件类型
-    folder: "static/images/folder.png",
-    folder2: "static/images/folder2.png",
-    image: "static/images/image.png",
-    image2: "static/images/image2.png",
-    image3: "static/images/image3.png",
-    video: "static/images/video.png",
-    video2: "static/images/video2.png",
-    video3: "static/images/video3.png",
-    video4: "static/images/video4.png",
-    video5: "static/images/video5.png",
-    audio: "static/images/audio.png",
-    audio2: "static/images/audio2.png",
-    audio3: "static/images/audio3.png",
-    audio4: "static/images/audio4.png",
-    audio5: "static/images/audio5.png",
-    audio6: "static/images/audio6.png",
-    text: "static/images/text.png",
-    document: "static/images/document.png",
-    unknown: "static/images/unknown.png",
-    unknown2: "static/images/unknown2.png",
-    
-    // 媒体控制
-    play: "static/images/play.png",
-    pause: "static/images/pause.png",
-    playing: "static/images/playing.png",
-    player: "static/images/player.png",
-    forward: "static/images/forward.png",
-    rewind: "static/images/rewind.png",
-    next: "static/images/next.png",
-    previous: "static/images/previous.png",
-    reset: "static/images/reset.png",
-    slow: "static/images/slow.png",
-    fast: "static/images/fast.png",
-    fast2: "static/images/fast2.png",
-    
-    // 编辑/操作
-    edit: "static/images/edit.png",
-    copy: "static/images/copy.png",
-    rename: "static/images/rename.png",
-    delete: "static/images/delete.png",
-    trash: "static/images/trash.png",
-    send: "static/images/send.png",
-    upload: "static/images/upload.png",
-    download: "static/images/download.png",
-    redownload: "static/images/redownload.png",
-    
-    // 图像/视图控制
-    zoomin: "static/images/zoomin.png",
-    zoomout: "static/images/zoomout.png",
-    rotateLeft: "static/images/rotateLeft.png",
-    rotateRight: "static/images/rotateRight.png",
-    flip: "static/images/flip.png",
-    drag: "static/images/drag.png",
-    dotBig: "static/images/dotBig.png",
-    radial: "static/images/radial.png",
-    radial3: "static/images/radial3.png",
-    
-    // 音频控制
-    pitch: "static/images/pitch.png",
-    volume: "static/images/volume.png",
-    speaker: "static/images/speaker.png",
-    noaudio: "static/images/noaudio.png",
-    
-    // 电池状态
-    batterycharging: "static/images/batterycharging.png",
-    batterycritical: "static/images/batterycritical.png",
-    batterycriticalcharging: "static/images/batterycriticalcharging.png",
-    batteryfullcharging: "static/images/batteryfullcharging.png",
-    batteryfullnotcharging: "static/images/batteryfullnotcharging.png",
-    batterylow: "static/images/batterylow.png",
-    batterynormal: "static/images/batterynormal.png",
-    batterynormalcharging: "static/images/batterynormalcharging.png",
-    
-    // 网络/连接
-    wifi: "static/images/wifi.png",
-    wifi2: "static/images/wifi2.png",
-    wifilow: "static/images/wifilow.png",
-    nowifi: "static/images/nowifi.png",
-    nowifi2: "static/images/nowifi2.png",
-    network: "static/images/network.png",
-    network2: "static/images/network2.png",
-    connect: "static/images/connect.png",
-    connect21: "static/images/connect21.png",
-    "connect-bluetooth": "static/images/connect-bluetooth.png",
-    
-    // 蓝牙设备
-    "bluetooth-earpiece1": "static/images/bluetooth-earpiece1.png",
-    "bluetooth-earpiece2": "static/images/bluetooth-earpiece2.png",
-    "bluetooth-earpiece3": "static/images/bluetooth-earpiece3.png",
-    "bluetooth-headset": "static/images/bluetooth-headset.png",
-    
-    // 手势控制
-    "hand-control": "static/images/hand-control.png",
-    "hand-control2": "static/images/hand-control2.png",
-    handnxt: "static/images/handnxt.png",
-    handprv: "static/images/handprv.png",
-    handreset: "static/images/handreset.png",
-    handrotateleft: "static/images/handrotateleft.png",
-    handrotateright: "static/images/handrotateright.png",
-    handtoggleplaypause: "static/images/handtoggleplaypause.png",
-    handzooming: "static/images/handzooming.png",
-    "no-hand": "static/images/no-hand.png",
-    
-    // 设置/选项
-    setting: "static/images/setting.png",
-    options: "static/images/options.png",
-    "change-setting": "static/images/change-setting.png",
-    filters: "static/images/filters.png",
-    "more-thing": "static/images/more-thing.png",
-    advanced: "static/images/advanced.png",
-    all: "static/images/all.png",
-    close: "static/images/close.png",
-    cancel: "static/images/cancel.png",
-    add: "static/images/add.png",
-    
-    // 颜色/图像处理
-    colors: "static/images/colors.png",
-    colors2: "static/images/colors2.png",
-    colors3: "static/images/colors3.png",
-    colors4: "static/images/colors4.png",
-    saturation: "static/images/saturation.png",
-    sharpen: "static/images/sharpen.png",
-    
-    // 导航/方向
-    up: "static/images/up.png",
-    down: "static/images/down.png",
-    downg: "static/images/downg.png",
-    left: "static/images/left.png", // 注意：文件列表中未显示，但可能有
-    right: "static/images/right.png", // 注意：文件列表中未显示，但可能有
-    
-    // 下载类型
-    "download-audio": "static/images/download-audio.png",
-    "download-image": "static/images/download-image.png",
-    "download-video": "static/images/download-video.png",
-    "download-torrent": "static/images/download-torrent.png",
-    nodownloads: "static/images/nodownloads.png",
-    
-    // 文件管理器
-    filemanager: "static/images/filemanager.png",
-    "open-folder": "static/images/open-folder.png",
-    usbDrive: "static/images/usb-drive.png",
-    zip: "static/images/zip.png",
-    
-    // 系统/硬件
-    poweroff: "static/images/poweroff.png",
-    window: "static/images/window.png",
-    core: "static/images/core.png",
-    cursor: "static/images/cursor.png",
-    processor: "static/images/processor.png",
-    gpu: "static/images/gpu.png",
-    gpu2: "static/images/gpu2.png",
-    
-    // 操作系统
-    linux: "static/images/linux.png",
-    macos: "static/images/macos.png",
-    archlinux: "static/images/archlinux.png",
-    
-    // 应用/品牌
-    nyxlogo: "static/images/nyxlogo.png",
-    github: "static/images/github.png",
-    windscribe: "static/images/windscribe.png",
-    siba2: "static/images/siba2.png",
-    siba3: "static/images/siba3.png",
-    strawberry: "static/images/strawberry.png",
-    gozi: "static/images/gozi.png",
-    "3hex": "static/images/3hex.png",
-    atsnai: "static/images/atsnai.png",
-    snaiper: "static/images/snaiper.png",
-    
-    // 情感/状态图标
-    heart: "static/images/heart.png",
-    heart2: "static/images/heart2.png",
-    heart3: "static/images/heart3.png",
-    heart4: "static/images/heart4.png",
-    redheart: "static/images/redheart.png",
-    star: "static/images/star.png",
-    attention: "static/images/attention.png",
-    decrease: "static/images/decrease.png",
-    
-    // 传输/网络
-    torrent: "static/images/torrent.png",
-    magnet: "static/images/magnet.png",
-    load: "static/images/load.png",
-    loading: "static/images/loading.gif",
-    
-    // 其他
-    search: "static/images/search.png",
-    home: "static/images/home.png",
-    transparent: "static/images/transparent.png",
-    acceptAll: "static/images/accept-all.png",
-    finished: "static/images/finished.png",
-    finishedbadge: "static/images/finishedbadge.png",
-    syringingError_transparent: "static/images/syringingError_transparent.png",
-    favicon: "static/images/favicon.ico",
-    
-    // 特殊用途
-    handControl: "static/images/hand-control.png", // 备用键名
-    handControl2: "static/images/hand-control2.png", // 备用键名
-    "18432695": "static/images/18432695.png",
-    
-    // 占位符/特殊状态
-    errorRocket: "static/images/errorRocket.jpg",
-    errorRocketLookingUp: "static/images/errorRocketLookingUp.jpg",
-    errorUknown: "static/images/errorUknown.jpg",
-    syringingError: "static/images/syringingError.jpg",
-    iconsManyError: "static/images/iconsManyError.jpg",
-    ErrorNetworkNodes: "static/images/ErrorNetworkNodes.jpg",
-    ErrorGlobe: "static/images/ErrorGlobe.jpg",
-    errorLandScape: "static/images/errorLandScape.jpg",
-};
+        // 基本文件类型
+        folder: "static/images/folder.png",
+        folder2: "static/images/folder2.png",
+        image: "static/images/image.png",
+        image2: "static/images/image2.png",
+        image3: "static/images/image3.png",
+        video: "static/images/video.png",
+        video2: "static/images/video2.png",
+        video3: "static/images/video3.png",
+        video4: "static/images/video4.png",
+        video5: "static/images/video5.png",
+        audio: "static/images/audio.png",
+        audio2: "static/images/audio2.png",
+        audio3: "static/images/audio3.png",
+        audio4: "static/images/audio4.png",
+        audio5: "static/images/audio5.png",
+        audio6: "static/images/audio6.png",
+        text: "static/images/text.png",
+        document: "static/images/document.png",
+        unknown: "static/images/unknown.png",
+        unknown2: "static/images/unknown2.png",
+
+        // 媒体控制
+        play: "static/images/play.png",
+        pause: "static/images/pause.png",
+        playing: "static/images/playing.png",
+        player: "static/images/player.png",
+        forward: "static/images/forward.png",
+        rewind: "static/images/rewind.png",
+        next: "static/images/next.png",
+        previous: "static/images/previous.png",
+        reset: "static/images/reset.png",
+        slow: "static/images/slow.png",
+        fast: "static/images/fast.png",
+        fast2: "static/images/fast2.png",
+
+        // 编辑/操作
+        edit: "static/images/edit.png",
+        copy: "static/images/copy.png",
+        rename: "static/images/rename.png",
+        delete: "static/images/delete.png",
+        trash: "static/images/trash.png",
+        send: "static/images/send.png",
+        upload: "static/images/upload.png",
+        download: "static/images/download.png",
+        redownload: "static/images/redownload.png",
+
+        // 图像/视图控制
+        zoomin: "static/images/zoomin.png",
+        zoomout: "static/images/zoomout.png",
+        rotateLeft: "static/images/rotateLeft.png",
+        rotateRight: "static/images/rotateRight.png",
+        flip: "static/images/flip.png",
+        drag: "static/images/drag.png",
+        dotBig: "static/images/dotBig.png",
+        radial: "static/images/radial.png",
+        radial3: "static/images/radial3.png",
+
+        // 音频控制
+        pitch: "static/images/pitch.png",
+        volume: "static/images/volume.png",
+        speaker: "static/images/speaker.png",
+        noaudio: "static/images/noaudio.png",
+
+        // 电池状态
+        batterycharging: "static/images/batterycharging.png",
+        batterycritical: "static/images/batterycritical.png",
+        batterycriticalcharging: "static/images/batterycriticalcharging.png",
+        batteryfullcharging: "static/images/batteryfullcharging.png",
+        batteryfullnotcharging: "static/images/batteryfullnotcharging.png",
+        batterylow: "static/images/batterylow.png",
+        batterynormal: "static/images/batterynormal.png",
+        batterynormalcharging: "static/images/batterynormalcharging.png",
+
+        // 网络/连接
+        wifi: "static/images/wifi.png",
+        wifi2: "static/images/wifi2.png",
+        wifilow: "static/images/wifilow.png",
+        nowifi: "static/images/nowifi.png",
+        nowifi2: "static/images/nowifi2.png",
+        network: "static/images/network.png",
+        network2: "static/images/network2.png",
+        connect: "static/images/connect.png",
+        connect21: "static/images/connect21.png",
+        "connect-bluetooth": "static/images/connect-bluetooth.png",
+
+        // 蓝牙设备
+        "bluetooth-earpiece1": "static/images/bluetooth-earpiece1.png",
+        "bluetooth-earpiece2": "static/images/bluetooth-earpiece2.png",
+        "bluetooth-earpiece3": "static/images/bluetooth-earpiece3.png",
+        "bluetooth-headset": "static/images/bluetooth-headset.png",
+
+        // 手势控制
+        "hand-control": "static/images/hand-control.png",
+        "hand-control2": "static/images/hand-control2.png",
+        handnxt: "static/images/handnxt.png",
+        handprv: "static/images/handprv.png",
+        handreset: "static/images/handreset.png",
+        handrotateleft: "static/images/handrotateleft.png",
+        handrotateright: "static/images/handrotateright.png",
+        handtoggleplaypause: "static/images/handtoggleplaypause.png",
+        handzooming: "static/images/handzooming.png",
+        "no-hand": "static/images/no-hand.png",
+
+        // 设置/选项
+        setting: "static/images/setting.png",
+        options: "static/images/options.png",
+        "change-setting": "static/images/change-setting.png",
+        filters: "static/images/filters.png",
+        "more-thing": "static/images/more-thing.png",
+        advanced: "static/images/advanced.png",
+        all: "static/images/all.png",
+        close: "static/images/close.png",
+        cancel: "static/images/cancel.png",
+        add: "static/images/add.png",
+
+        // 颜色/图像处理
+        colors: "static/images/colors.png",
+        colors2: "static/images/colors2.png",
+        colors3: "static/images/colors3.png",
+        colors4: "static/images/colors4.png",
+        saturation: "static/images/saturation.png",
+        sharpen: "static/images/sharpen.png",
+
+        // 导航/方向
+        up: "static/images/up.png",
+        down: "static/images/down.png",
+        downg: "static/images/downg.png",
+        left: "static/images/left.png", // 注意：文件列表中未显示，但可能有
+        right: "static/images/right.png", // 注意：文件列表中未显示，但可能有
+
+        // 下载类型
+        "download-audio": "static/images/download-audio.png",
+        "download-image": "static/images/download-image.png",
+        "download-video": "static/images/download-video.png",
+        "download-torrent": "static/images/download-torrent.png",
+        nodownloads: "static/images/nodownloads.png",
+
+        // 文件管理器
+        filemanager: "static/images/filemanager.png",
+        "open-folder": "static/images/open-folder.png",
+        usbDrive: "static/images/usb-drive.png",
+        zip: "static/images/zip.png",
+
+        // 系统/硬件
+        poweroff: "static/images/poweroff.png",
+        window: "static/images/window.png",
+        core: "static/images/core.png",
+        cursor: "static/images/cursor.png",
+        processor: "static/images/processor.png",
+        gpu: "static/images/gpu.png",
+        gpu2: "static/images/gpu2.png",
+
+        // 操作系统
+        linux: "static/images/linux.png",
+        macos: "static/images/macos.png",
+        archlinux: "static/images/archlinux.png",
+
+        // 应用/品牌
+        nyxlogo: "static/images/nyxlogo.png",
+        github: "static/images/github.png",
+        windscribe: "static/images/windscribe.png",
+        siba2: "static/images/siba2.png",
+        siba3: "static/images/siba3.png",
+        strawberry: "static/images/strawberry.png",
+        gozi: "static/images/gozi.png",
+        "3hex": "static/images/3hex.png",
+        atsnai: "static/images/atsnai.png",
+        snaiper: "static/images/snaiper.png",
+
+        // 情感/状态图标
+        heart: "static/images/heart.png",
+        heart2: "static/images/heart2.png",
+        heart3: "static/images/heart3.png",
+        heart4: "static/images/heart4.png",
+        redheart: "static/images/redheart.png",
+        star: "static/images/star.png",
+        attention: "static/images/attention.png",
+        decrease: "static/images/decrease.png",
+
+        // 传输/网络
+        torrent: "static/images/torrent.png",
+        magnet: "static/images/magnet.png",
+        load: "static/images/load.png",
+        loading: "static/images/loading.gif",
+
+        // 其他
+        search: "static/images/search.png",
+        home: "static/images/home.png",
+        transparent: "static/images/transparent.png",
+        acceptAll: "static/images/accept-all.png",
+        finished: "static/images/finished.png",
+        finishedbadge: "static/images/finishedbadge.png",
+        syringingError_transparent: "static/images/syringingError_transparent.png",
+        favicon: "static/images/favicon.ico",
+
+        // 特殊用途
+        handControl: "static/images/hand-control.png", // 备用键名
+        handControl2: "static/images/hand-control2.png", // 备用键名
+        "18432695": "static/images/18432695.png",
+
+        // 占位符/特殊状态
+        errorRocket: "static/images/errorRocket.jpg",
+        errorRocketLookingUp: "static/images/errorRocketLookingUp.jpg",
+        errorUknown: "static/images/errorUknown.jpg",
+        syringingError: "static/images/syringingError.jpg",
+        iconsManyError: "static/images/iconsManyError.jpg",
+        ErrorNetworkNodes: "static/images/ErrorNetworkNodes.jpg",
+        ErrorGlobe: "static/images/ErrorGlobe.jpg",
+        errorLandScape: "static/images/errorLandScape.jpg",
+    };
 
     window.fileExplorerWasOpened = false
 
@@ -11728,6 +11751,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.currentImageRotation = window.rotatingDegrees || 0;
 
             img.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale}) rotate(${rotatingDegrees}deg)`;
+            playClickSound()
             showNotification(`${Math.round(scale * 100)}° ZOOM`)
         }
 
@@ -11892,6 +11916,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.currentVideoPosY = vPosY;
             window.currentVideoRotation = window.videoRotation;
 
+            playClickSound()
             if (Math.round(vScale * 100) !== 100) showNotification(`${Math.round(vScale * 100)}° ZOOM`);
 
         }
